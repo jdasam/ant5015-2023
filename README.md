@@ -11,3 +11,8 @@ Reference Materials
 - [Music Source Separation Tutorial](https://source-separation.github.io/tutorial/landing.html) by Ethan Manilow, Prem Seetharman, and Justin Salamon
 
 - [Music Classification Tutorial](https://music-classification.github.io/tutorial/) by Minz Won, Janne Spijkervet, and Keunwoo Choi
+
+
+- About FFT
+  - [Veritasium](https://youtu.be/nmgFG7PUHfo) 
+  - [3Blue1Brown](https://youtu.be/spUNpyF58BY)
