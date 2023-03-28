@@ -277,18 +277,18 @@ if __name__ == "__main__":
   c_major_chord = [60, 64, 67]
   amp_list = [1, 1, 1]
   chord_tone = generate_multi_pitch_tone(c_major_chord, amp_list, 3, sr=SR)
-  torchaudio.save('chord_tone.wav', chord_tone, SR)
+  torchaudio.save('chord_tone.wav', chord_tone.unsqueeze(0), SR)
 
 
   fund_note = 69 # MIDI pitch for A4
   major_scale_in_hz = make_major_scale_hz_sequence(fund_note)
   scale_sine = generate_sequence_of_pitch(major_scale_in_hz, duration=0.5, sr=SR)
-  torchaudio.save('scale_sine.wav', scale_sine, SR)
+  torchaudio.save('scale_sine.wav', scale_sine.unsqueeze(0), SR)
 
 
   shetone = ShepardToneGenerator(SR,0.3,3)
   shepard_audio = shetone.generate()
-  torchaudio.save('shepard.wav', shepard_audio, SR)
+  torchaudio.save('shepard.wav', shepard_audio.unsqueeze(0), SR)
 
   spec_converter = SpectrogramConverter(n_fft=1024, hop_size=512, num_mels=128, sample_rate=16000)
   spec_converter = SpectrogramConverter(n_fft=1024, hop_size=512, num_mels=128, sample_rate=16000)
