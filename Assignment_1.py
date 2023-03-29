@@ -86,6 +86,21 @@ def generate_sequence_of_pitch(alist_of_hz, duration, sr):
   # TODO: 주어진 입출력 형식과 내용을 만족하는 함수를 완성하시오
   return
 
+def make_just_intonation_triad_in_midi_pitch(fundamental_pitch):
+  '''
+  This function takes a fundamental_pitch in MIDI pitch then returns a list of three MIDI pitch
+  that corresponds to major triad for a given fundamental frequency
+
+  fundamental_pitch: 근음의 음고 MIDI Pitch
+  output= [근음의 MIDI_pitch, 근음 순정 장3도의 MIDI_Pitch, 근음기준 순정 5도의 MIDI Pitch]
+  '''
+
+  # TODO: 주어진 입출력 형식과 내용을 만족하는 함수를 완성하시오
+
+  return
+
+
+
 class ShepardToneGenerator:
   def __init__(self, sr, dur_per_step, num_iteration):
     self.sr = sr #sampling rate
@@ -284,6 +299,18 @@ if __name__ == "__main__":
   major_scale_in_hz = make_major_scale_hz_sequence(fund_note)
   scale_sine = generate_sequence_of_pitch(major_scale_in_hz, duration=0.5, sr=SR)
   torchaudio.save('scale_sine.wav', scale_sine.unsqueeze(0), SR)
+
+
+  fund_pitch = 60
+  just_intonation_chord = make_just_intonation_triad_in_midi_pitch(fund_pitch)
+  amp_list = [1, 1, 1]
+  just_chord_tone = generate_multi_pitch_tone(just_intonation_chord, amp_list, 3, sr=SR)
+  torchaudio.save('just_chord_tone.wav', just_chord_tone.unsqueeze(0), SR)
+
+
+  equal_temperament_chord = [fund_pitch, fund_pitch+4, fund_pitch+7]
+  equal_chord_tone = generate_multi_pitch_tone(equal_temperament_chord, amp_list, 3, sr=SR)
+  torchaudio.save('equal_chord_tone.wav', equal_chord_tone.unsqueeze(0), SR)
 
 
   shetone = ShepardToneGenerator(SR,0.3,3)
