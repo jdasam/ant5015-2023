@@ -458,6 +458,30 @@ def convert_idx_pred_to_origin(pred:torch.Tensor, idx2pitch:list, idx2dur:list):
     
   return 
 
+def convert_pitch_dur_to_note_representation(pitch_dur:torch.LongTensor):
+  '''
+  This function takes pitch_dur (shape of [num_notes, 2]) and returns the corresponding note representation (shape of [num_notes, 4])
+  In note representation, each note is represented as [start_timestep, pitch, duration, velocity]
+  
+  Since our generation is monophonic, you can regard start_timestep starts from 0 and accumulate the duration of note.
+  You can fix velocity to 64.
+  
+  
+  Arguments:
+    pitch_dur: LongTensor of note where each note represented as pitch and duration value
+    
+  return:
+    note_repr: numpy.Array with shape of [num_notes, 4]
+               each note has value of [start_timestep, pitch, duration, velocity]
+
+  TODO: Complete this function
+  Hint: You can use torch.cumsum() to accumulate the duration.
+  To convert torch tensor to numpy, you can use atensor.numpy()
+  
+  '''
+  
+  return
+
 
 def main():
   example_input_size = 3
@@ -610,7 +634,15 @@ def main():
   assert isinstance(gen_out, torch.LongTensor), f"output of generate() has to be torch.LongTensor, not {type(gen_out)}"
   assert gen_out.ndim == 2, f"output of generate() has to be 2D tensor, not {gen_out.ndim}D tensor"
   assert gen_out.shape[1] == 2
+  
+  
+  converted_out = convert_idx_pred_to_origin(gen_out, model.idx2pitch, model.idx2dur)
+  assert converted_out.shape == gen_out.shape
+  print(f"convted_out: \n {converted_out}")
 
+  note_repr = convert_pitch_dur_to_note_representation(converted_out)
+  print(f"note_reprnote: \n {note_repr}")
+  
 
 if __name__ == '__main__':
   
