@@ -3,7 +3,7 @@ import torch.nn as nn
 import muspy
 from torch.utils.data import DataLoader
 from torch.nn.utils.rnn import pad_sequence, pack_sequence, PackedSequence, pad_packed_sequence
-
+from tqdm.auto import tqdm
 
 def rnn_single_step(current_input:torch.Tensor, prev_hidden:torch.Tensor, hh_weight:torch.Tensor, ih_weight:torch.Tensor, bias:torch.Tensor) -> torch.Tensor:
   '''
@@ -578,7 +578,17 @@ def main():
   print('Loss: ', loss)
   assert (torch.abs(loss-torch.Tensor([1.5020, 0.7572, 0.4797, 0.7693, 0.4563, 0.8718, 0.7973, 1.3412, 1.6403, 0.2423]))<1e-4).all(), "Error in loss value"
   model.cpu()
-
+  optimizer = torch.optim.Adam(model.parameters(), lr=0.003)
+  num_iter = 20
+  DEV = 'cpu'
+  model.to(DEV)
+  batch = next(iter(train_loader))
+  for i in tqdm(range(num_iter)):
+    model.train()
+    loss = get_loss_for_single_batch(model, batch, device=DEV)
+    loss.backward()
+    optimizer.step()
+    optimizer.zero_grad()
 
   batch_size = 2
   input_vec, initial_hidden = get_initial_input_and_hidden_state(model, batch_size=batch_size)
