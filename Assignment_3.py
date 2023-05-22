@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import muspy
 from torch.utils.data import DataLoader
-from torch.nn.utils.rnn import pad_sequence, pack_sequence, PackedSequence, pad_packed_sequence
+from torch.nn.utils.rnn import pad_sequence, pack_sequence, PackedSequence, pad_packed_sequence, pack_padded_sequence
 from tqdm.auto import tqdm
 
 def rnn_single_step(current_input:torch.Tensor, prev_hidden:torch.Tensor, hh_weight:torch.Tensor, ih_weight:torch.Tensor, bias:torch.Tensor) -> torch.Tensor:
